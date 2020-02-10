@@ -1,0 +1,39 @@
+name: Build
+on: [push]
+jobs:
+
+  build:
+    name: ${{ matrix.vm-os }} with go${{ matrix.go-version }}
+    runs-on: ${{ matrix.vm-os }}
+    strategy:
+      max-parallel: 10
+      fail-fast: false
+      matrix:
+        vm-os: [ubuntu-latest]
+        go-version: [1.13.7]
+        # go-version: [1.11.13, 1.12.15, 1.13.7]
+        # vm-os: [ubuntu-latest, macOS-latest, windows-latest]
+
+    steps:
+    - name: Set up Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go-version }}
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Get dependencies
+      shell: bash
+      run: |
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+
+    - name: Build
+      shell: bash
+      run: |
+        make ci
