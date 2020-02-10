@@ -1,5 +1,11 @@
 name: Build
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - '**.md'
+  schedule:
+    - cron: '0 21 * * 0'
+
 jobs:
 
   build:
@@ -9,10 +15,8 @@ jobs:
       max-parallel: 10
       fail-fast: false
       matrix:
-        vm-os: [ubuntu-latest]
-        go-version: [1.13.7]
-        # go-version: [1.11.13, 1.12.15, 1.13.7]
-        # vm-os: [ubuntu-latest, macOS-latest, windows-latest]
+        go-version: [1.11.13, 1.12.15, 1.13.7]
+        vm-os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
     - name: Set up Go ${{ matrix.go-version }}
