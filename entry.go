@@ -20,6 +20,7 @@ var (
 	}
 )
 
+// GetDevelopers retrieves a list of GitHub trending developers from the API.
 func GetDevelopers() (devs []*Developer, err error) {
 	var resp *http.Response
 	if resp, err = client.Get(devApiEndpoint); err != nil {
@@ -34,6 +35,7 @@ func GetDevelopers() (devs []*Developer, err error) {
 	return
 }
 
+// GetRepositories retrieves a list of GitHub trending repositories from the API.
 func GetRepositories() (repos []*Repository, err error) {
 	var resp *http.Response
 	if resp, err = client.Get(repoApiEndpoint); err != nil {

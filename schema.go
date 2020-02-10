@@ -6,6 +6,7 @@ import (
 	"github.com/1set/gut/ystring"
 )
 
+// Repository consists of basic info of a GitHub trending repository and its developer.
 type Repository struct {
 	Author             string `json:"author"`
 	Name               string `json:"name"`
@@ -47,6 +48,7 @@ func (r Repository) String() string {
 	return sb.String()
 }
 
+// Developer consists of basic info of a GitHub trending developer and his/her trending repository.
 type Developer struct {
 	Username    string `json:"username"`
 	DisplayName string `json:"name"`
